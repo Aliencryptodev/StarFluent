@@ -239,7 +239,7 @@ export function generateWavesForLevel(playerRace: RaceKey, level: number): WaveC
     waves.push({
       id: waveIndex,
       enemies: waveEnemies,
-      totalDuration: Math.max(waveEnemies.map(e => e.delay + (e.count * e.interval))),
+      totalDuration: Math.max(...waveEnemies.map(e => e.delay + (e.count * e.interval))),
       difficulty: Math.min(10, Math.floor(waveIndex + level / 2))
     });
   }
@@ -315,6 +315,7 @@ function getEnemyColor(race: RaceKey): string {
 
   return colorMap[race];
 }
+
 
 
 

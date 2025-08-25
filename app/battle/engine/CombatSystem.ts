@@ -3,7 +3,7 @@
 // ========================================
 
 import { GridPosition, IsometricPosition, AttackType, StatusEffect } from '../../../types';
-import { TowerType } from '../../../types/towers';
+import { TowerType } from '../../../types';
 import { EnemyInstance, EnemyManager } from './EnemySystem';
 import { IsometricUtils } from './IsometricEngine';
 
@@ -549,4 +549,5 @@ export class CombatSystem {
       canAttack
     };
   }
+
 }

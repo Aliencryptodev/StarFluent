@@ -1,4 +1,5 @@
 // ========================================
+
 // ENEMY DEFINITIONS BY RACE
 // ========================================
 
@@ -35,6 +36,7 @@ export const HUMAN_ENEMIES: EnemyType[] = [
     race: 'human',
     health: 200,
     maxHealth: 200,
+    
     speed: 0.6,
     armor: 15,
     reward: 35,
@@ -285,6 +287,7 @@ export function getEnemySpriteInfo(enemy: EnemyType) {
   };
 }
 
+
 // Fallback emojis para debug/desarrollo
 function getEnemyEmoji(enemyId: string): string {
   const emojiMap = {
@@ -293,6 +296,7 @@ function getEnemyEmoji(enemyId: string): string {
     'sliver_zergling': '🐺', 
     'sliver_hydralisk': '🐍',
     'alien_zealot': '⚔️',
+    
     'alien_dragoon': '🤖'
   };
   
@@ -300,20 +304,12 @@ function getEnemyEmoji(enemyId: string): string {
 }
 
 // Colores por raza para fallbacks
-function getEnemyColor(race: RaceKey): string {
+funnction getEnemyColor(race: RaceKey): string {
   const colorMap = {
     human: '#4a9eff',
     sliver: '#b455ff',
     alien: '#ffaa00'
   };
-  
+
   return colorMap[race];
-}dralisk': { emoji: '🐍', color: '#7a3db3' },
-    
-    // Alien
-    'alien_zealot': { emoji: '⚔️', color: '#ffaa00' },
-    'alien_dragoon': { emoji: '🤖', color: '#cc7700' }
-  };
-  
-  return spriteMap[enemy.id as keyof typeof spriteMap] || { emoji: '❓', color: '#ffffff' };
 }

@@ -26,6 +26,25 @@ export type StatusEffect = {
   source: string;
 };
 
+export type TowerType = {
+  id: string;
+  name: string;
+  race: RaceKey;
+  tier: 1 | 2 | 3;
+  baseTower: string;
+  damage: number;
+  range: number;
+  attackSpeed: number;
+  cost: number;
+  attackType: AttackType;
+  specialAbilities?: SpecialAbility[];
+  spriteKey: string;
+  projectileSprite?: string;
+  effectSprite?: string;
+  attackSound?: string;
+  buildSound?: string;
+};
+
 export type EnemyType = {
   id: string;
   name: string;
@@ -119,3 +138,4 @@ export const RACE_CONFIGS: Record<RaceKey, RaceConfig> = {
     description: 'Advanced psionic beings. Harness energy shields and devastating plasma weapons.'
   }
 };
+

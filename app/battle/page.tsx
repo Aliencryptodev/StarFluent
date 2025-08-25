@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 import { RaceKey, RACE_CONFIGS } from '../../types';
 
-// Importación dinámica del componente de batalla (lo crearemos después)
 const BattleEngine = dynamic(() => import('./BattleEngine'), { ssr: false });
 
 function BattleContent() {
@@ -15,7 +14,6 @@ function BattleContent() {
   const race = searchParams.get('race') as RaceKey | null;
   const level = searchParams.get('level');
   
-  // Validación de parámetros
   if (!race || !RACE_CONFIGS[race] || !level) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -32,30 +30,20 @@ function BattleContent() {
     );
   }
 
-  const raceConfig = RACE_CONFIGS[race];
-  const levelNumber = parseInt(level);
-
-  // Configuración de batalla
   const battleConfig = {
     race: race,
-    level: levelNumber,
-    raceConfig: raceConfig,
-    // Determinar enemigos (las otras dos razas)
-    enemyRaces: (['human', 'sliver', 'alien'] as RaceKey[]).filter(r => r !== race)
+    level: parseInt(level),
+    raceConfig: RACE_CONFIGS[race]
   };
 
-  // Función para volver a la campaña
   const handleBackToCampaign = () => {
     router.push(`/campaign/${race}`);
   };
 
   return (
     <div className="w-full h-screen relative">
-      {/* Header de batalla */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-gray-600">
         <div className="flex items-center justify-between px-6 py-4">
-          
-          {/* Botón de regreso */}
           <button
             onClick={handleBackToCampaign}
             className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg 
@@ -64,39 +52,26 @@ function BattleContent() {
             ← Back to Campaign
           </button>
           
-          {/* Información del nivel */}
           <div className="text-center">
             <div className="flex items-center gap-4">
-              <div 
-                className="text-2xl"
-                style={{ color: raceConfig.colors.primary }}
-              >
+              <div className="text-2xl">
                 {race === 'human' ? '🛡️' : race === 'sliver' ? '🧬' : '🔮'}
               </div>
               <div>
                 <div className="text-white font-bold text-lg">
-                  {raceConfig.displayName} Campaign
+                  {RACE_CONFIGS[race].displayName} Campaign
                 </div>
                 <div className="text-gray-300 text-sm">
-                  Mission {levelNumber} - {getMissionName(levelNumber)}
+                  Mission {level}
                 </div>
               </div>
             </div>
           </div>
           
-          {/* Controles de juego (placeholder) */}
-          <div className="flex gap-2">
-            <button className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded border border-gray-500">
-              ⏸️
-            </button>
-            <button className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded border border-gray-500">
-              ⚡
-            </button>
-          </div>
+          <div className="w-32"></div>
         </div>
       </div>
       
-      {/* Game Area */}
       <div className="w-full h-full pt-20">
         <BattleEngine config={battleConfig} />
       </div>
@@ -117,22 +92,4 @@ export default function BattlePage() {
       <BattleContent />
     </Suspense>
   );
-}
-
-// Helper function para nombres de misión
-function getMissionName(level: number): string {
-  const names = [
-    "First Contact",
-    "Defensive Line", 
-    "Heavy Assault",
-    "Strategic Position",
-    "Multi-Wave Attack",
-    "Elite Forces",
-    "Siege Warfare", 
-    "Final Push",
-    "Last Stand",
-    "Total Victory"
-  ];
-  
-  return names[level - 1] || `Mission ${level}`;
 }

@@ -1,5 +1,6 @@
 // ========================================
 
+
 // ENEMY DEFINITIONS BY RACE
 // ========================================
 
@@ -36,6 +37,7 @@ export const HUMAN_ENEMIES: EnemyType[] = [
     race: 'human',
     health: 200,
     maxHealth: 200,
+    
     
     speed: 0.6,
     armor: 15,
@@ -313,5 +315,6 @@ funnction getEnemyColor(race: RaceKey): string {
 
   return colorMap[race];
 }
+
 
 

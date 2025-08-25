@@ -1,0 +1,98 @@
+*** Begin Patch
+*** Update File: app/battle/engine/EnemySystem.ts
+@@
+ export class EnemyManager {
+-  private enemies: Map = new Map();
++  // Use generics to specify that the map keys are enemy IDs (strings)
++  // and the values are EnemyInstance objects.
++  private enemies: Map<string, EnemyInstance> = new Map();
+*** End Patch
+
+*** Begin Patch
+*** Update File: app/battle/engine/CombatSystem.ts
+@@
+ export class CombatSystem {
+-  private towers: Map = new Map();
+-  private projectiles: Map = new Map();
++  // Maps tower IDs to TowerInstance objects
++  private towers: Map<string, TowerInstance> = new Map();
++  // Maps projectile IDs to ProjectileInstance objects
++  private projectiles: Map<string, ProjectileInstance> = new Map();
+*** End Patch
+
+*** Begin Patch
+*** Update File: app/battle/engine/PathfindingSystem.ts
+@@
+   private static instance: PathfindingSystem;
+-  private paths: Map = new Map();
++  // Stores generated paths by their unique IDs
++  private paths: Map<string, GamePath> = new Map();
+*** End Patch
+
+*** Begin Patch
+*** Update File: app/battle/engine/SpriteSystem.ts
+@@
+ export class SpriteManager {
+   private static instance: SpriteManager;
+-  private sprites: Map = new Map();
+-  private loadingPromises: Map > = new Map();
++  // Map of loaded sprite data keyed by spriteKey
++  private sprites: Map<string, SpriteData> = new Map();
++  // Map of pending sprite load promises keyed by spriteKey
++  private loadingPromises: Map<string, Promise<HTMLImageElement>> = new Map();
+@@
+   // Cargar un sprite individual
+-  async loadSprite(spriteKey: string, spritePath: string): Promise {
++  async loadSprite(spriteKey: string, spritePath: string): Promise<HTMLImageElement> {
+@@
+-    // Crear nueva promesa de carga
+-    const loadPromise = new Promise ((resolve, reject) => {
++    // Crear nueva promesa de carga, specifying the type of the resolved value
++    const loadPromise = new Promise<HTMLImageElement>((resolve, reject) => {
+*** End Patch
+
+*** Begin Patch
+*** Update File: app/battle/engine/SpriteSystem.ts
+@@
+   // Cargar todos los sprites de una raza
+-  async loadRaceSprites(race: RaceKey): Promise {
+-    const spritePromises: Promise [] = [];
++  async loadRaceSprites(race: RaceKey): Promise<void> {
++    const spritePromises: Promise<HTMLImageElement>[] = [];
+*** End Patch
+
+*** Begin Patch
+*** Update File: app/battle/engine/SpriteSystem.ts
+@@
+   // Cargar sprites esenciales para el juego
+-  async preloadCoreSprites(): Promise {
++  async preloadCoreSprites(): Promise<void> {
+*** End Patch
+
+*** Begin Patch
+*** Update File: app/battle/engine/VisualEffectsSystem.ts
+@@
+ export class VisualEffectsSystem {
+-  private effects: Map = new Map();
+-  private particles: Map = new Map();
++  // Maps effect IDs to their corresponding VisualEffect objects
++  private effects: Map<string, VisualEffect> = new Map();
++  // Maps particle IDs to individual ParticleEffect objects
++  private particles: Map<string, ParticleEffect> = new Map();
+*** End Patch
+
+*** Begin Patch
+*** Update File: types/index.ts
+@@ export type EnemyType = {
+-  resistances: Partial >; // % de resistencia
++  // Percentage resistances against each attack type; values are between 0 and 1
++  resistances: Partial<Record<AttackType, number>>; // % de resistencia
+*** End Patch
+
+*** Begin Patch
+*** Update File: types/index.ts
+@@
+-export const RACE_CONFIGS: Record = {
++// Provide specific generics for Record to map each RaceKey to its corresponding RaceConfig
++export const RACE_CONFIGS: Record<RaceKey, RaceConfig> = {
+*** End Patch

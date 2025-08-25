@@ -73,7 +73,7 @@ export type Enemy = {
 };
 
 export type SpecialAbility = {
-  type: 'splash' | 'chain' | 'dot' | 'slow' | 'armor_pierce' | 'shield_drain';
+  type: 'splash' | 'chain' | 'dot' | 'slow' | 'armor_pierce' | 'shield_drain' | 'stun';
   value: number;
   duration?: number;
   radius?: number;
@@ -138,4 +138,5 @@ export const RACE_CONFIGS: Record<RaceKey, RaceConfig> = {
     description: 'Advanced psionic beings. Harness energy shields and devastating plasma weapons.'
   }
 };
+
 

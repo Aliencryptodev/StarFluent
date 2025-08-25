@@ -313,3 +313,5 @@ funnction getEnemyColor(race: RaceKey): string {
 
   return colorMap[race];
 }
+
+

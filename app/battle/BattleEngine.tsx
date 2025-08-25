@@ -17,9 +17,12 @@ if (selectedTowerType) {
         setResources(prev => prev - selectedTowerType.cost);
         setSelectedTowerType(null);
         
-        console.log(`Built ${selectedTowerType.name} at (${gridPos.row}, ${gridPos.col})`);
+       console.log(`Built ${selectedTowerType.name} at (${gridPos.row}, ${gridPos.col})`);
       }
-    }  return (
+    }
+  }, [gameState, selectedTowerType, resources, addEntity]);
+
+  return (
     <div className={`w-full h-full bg-gradient-to-br ${race.colors.background} relative`}>
       
       {/* Overlay de preparación */}
@@ -1427,4 +1430,5 @@ export default function BattleEngine({ config }: { config: BattleConfig }) {
       </div>
     </div>
   );
+
 }

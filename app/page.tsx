@@ -3,27 +3,21 @@ import Link from 'next/link';
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
-      {/* Efectos de fondo */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-20 w-40 h-40 bg-blue-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-32 right-32 w-56 h-56 bg-purple-500 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-yellow-500 rounded-full blur-2xl opacity-25 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-32 right-32 w-56 h-56 bg-purple-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-yellow-500 rounded-full blur-2xl opacity-25 animate-pulse"></div>
       </div>
 
-      {/* Grid pattern overlay */}
-      <div 
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px'
-        }}
-      ></div>
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: `
+          linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px'
+      }}></div>
 
       <div className="relative z-10 min-h-screen flex flex-col">
-        {/* Header */}
         <header className="pt-16 pb-8 text-center">
           <h1 className="text-6xl font-bold text-white tracking-wider mb-4 drop-shadow-2xl">
             STARCRAFT
@@ -39,10 +33,7 @@ export default function HomePage() {
           </p>
         </header>
 
-        {/* Main Content */}
         <div className="flex-1 flex flex-col justify-center px-8">
-          
-          {/* Campaign Mode - Hero Section */}
           <section className="mb-16">
             <div className="max-w-4xl mx-auto">
               <div className="bg-gradient-to-r from-blue-900/40 via-purple-900/40 to-yellow-900/40 
@@ -95,50 +86,8 @@ export default function HomePage() {
               </div>
             </div>
           </section>
-
-          {/* Game Features */}
-          <section className="mb-12">
-            <div className="max-w-6xl mx-auto">
-              <h4 className="text-2xl font-bold text-white text-center mb-8">Game Features</h4>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-600/50 backdrop-blur-sm">
-                  <div className="text-3xl mb-4 text-blue-400">⚡</div>
-                  <h5 className="font-semibold text-white mb-2">Fast-Paced Action</h5>
-                  <p className="text-sm text-gray-400">
-                    Quick decision making with real-time tower upgrades and strategic positioning.
-                  </p>
-                </div>
-                
-                <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-600/50 backdrop-blur-sm">
-                  <div className="text-3xl mb-4 text-purple-400">🎯</div>
-                  <h5 className="font-semibold text-white mb-2">Unique Towers</h5>
-                  <p className="text-sm text-gray-400">
-                    Each race features distinctive towers with specialized abilities and upgrade paths.
-                  </p>
-                </div>
-                
-                <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-600/50 backdrop-blur-sm">
-                  <div className="text-3xl mb-4 text-yellow-400">⭐</div>
-                  <h5 className="font-semibold text-white mb-2">Star Rating System</h5>
-                  <p className="text-sm text-gray-400">
-                    Earn up to 3 stars per level based on your performance and efficiency.
-                  </p>
-                </div>
-                
-                <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-600/50 backdrop-blur-sm">
-                  <div className="text-3xl mb-4 text-green-400">🏗️</div>
-                  <h5 className="font-semibold text-white mb-2">Strategic Depth</h5>
-                  <p className="text-sm text-gray-400">
-                    Plan your defenses with different attack types, special abilities, and synergies.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
         </div>
 
-        {/* Footer */}
         <footer className="pb-8 text-center">
           <p className="text-gray-500 text-sm">
             Built with Next.js • Powered by Fluent Network

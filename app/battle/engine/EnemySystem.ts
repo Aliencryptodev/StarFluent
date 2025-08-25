@@ -35,12 +35,27 @@ export class EnemyInstance {
   // Actualizar el enemigo
   update(deltaTime: number): void {
     if (!this.isAlive) return;
-
     // Actualizar efectos de estado
+    this.updateStatusEffects(deltaTime);
+
+    // Actualizar velocidad basada en efectos
+    this.updateSpeed();
+
+    // Actualizar movimiento
+    this.pathFollower.update(deltaTime);
+
+    // Verificar si llegó al final
+    if (this.pathFollower.hasReachedEnd()) {
+      // El enemigo llegó a la base - debería causar daño al jugador
+      this.isAlive = false;
+    }
+  }
+
+  // Actualizar efectos de estado
   private updateStatusEffects(deltaTime: number): void {
     this.statusEffects = this.statusEffects.filter(effect => {
       effect.duration -= deltaTime;
-      
+
       // Aplicar efectos
       switch (effect.type) {
         case 'dot':
@@ -50,20 +65,20 @@ export class EnemyInstance {
             this.takeDamage(effect.value, 'dot', effect.source);
           }
           break;
-          
+
         case 'slow':
           // Efecto de ralentización se maneja en updateSpeed()
           break;
-          
+
         case 'stun':
           // Stun - detiene completamente el movimiento
           break;
-          
+
         case 'armor_reduction':
           // Reducción de armadura - se aplica en takeDamage()
           break;
       }
-      
+
       // Remover efecto si expiró
       return effect.duration > 0;
     });
@@ -125,6 +140,55 @@ export class EnemyInstance {
 
   getGridPosition() {
     return this.pathFollower.getCurrentGridPosition();
+  }
+
+  // Recibir daño
+  takeDamage(damage: number, attackType: AttackType, sourceId: string): boolean {
+    if (!this.isAlive) return false;
+
+    // Calcular daño real aplicando resistencias y armor
+    const realDamage = calculateDamage(damage, attackType, this.type);
+
+    this.health = Math.max(0, this.health - realDamage);
+    this.lastDamageTime = Date.now();
+
+    // Verificar si murió
+    if (this.health <= 0) {
+      this.isAlive = false;
+      return true; // Enemigo eliminado
+    }
+
+    return false; // Enemigo dañado pero vivo
+  }
+
+  // Aplicar efecto de estado
+  applyStatusEffect(effect: StatusEffect): void {
+    // Verificar resistencias
+    const resistance = this.type.resistances[effect.type] || 0;
+    if (Math.random() < resistance) {
+      return; // Resistió el efecto
+    }
+
+    // Buscar si ya tiene este efecto de la misma fuente
+    const existingIndex = this.statusEffects.findIndex(e =>
+      e.type === effect.type && e.source === effect.source
+    );
+
+    if (existingIndex >= 0) {
+      // Refrescar duración o stackear valor
+      const existing = this.statusEffects[existingIndex];
+      if (effect.type === 'dot') {
+        // Los DoTs se stackean
+        existing.value += effect.value;
+      } else {
+        // Otros efectos se refrescan
+        existing.value = Math.max(existing.value, effect.value);
+      }
+      existing.duration = effect.duration;
+    } else {
+      // Agregar nuevo efecto
+      this.statusEffects.push({ ...effect });
+    }
   }
 }
 
@@ -369,69 +433,4 @@ export class EnemyManager {
   getPath(): GamePath {
     return this.path;
   }
-}os de estado
-    this.updateStatusEffects(deltaTime);
-    
-    // Actualizar velocidad basada en efectos
-    this.updateSpeed();
-    
-    // Actualizar movimiento
-    this.pathFollower.update(deltaTime);
-    
-    // Verificar si llegó al final
-    if (this.pathFollower.hasReachedEnd()) {
-      // El enemigo llegó a la base - debería causar daño al jugador
-      this.isAlive = false;
-    }
-  }
-
-  // Recibir daño
-  takeDamage(damage: number, attackType: AttackType, sourceId: string): boolean {
-    if (!this.isAlive) return false;
-
-    // Calcular daño real aplicando resistencias y armor
-    const realDamage = calculateDamage(damage, attackType, this.type);
-    
-    this.health = Math.max(0, this.health - realDamage);
-    this.lastDamageTime = Date.now();
-    
-    // Verificar si murió
-    if (this.health <= 0) {
-      this.isAlive = false;
-      return true; // Enemigo eliminado
-    }
-    
-    return false; // Enemigo dañado pero vivo
-  }
-
-  // Aplicar efecto de estado
-  applyStatusEffect(effect: StatusEffect): void {
-    // Verificar resistencias
-    const resistance = this.type.resistances[effect.type] || 0;
-    if (Math.random() < resistance) {
-      return; // Resistió el efecto
-    }
-
-    // Buscar si ya tiene este efecto de la misma fuente
-    const existingIndex = this.statusEffects.findIndex(e => 
-      e.type === effect.type && e.source === effect.source
-    );
-
-    if (existingIndex >= 0) {
-      // Refrescar duración o stackear valor
-      const existing = this.statusEffects[existingIndex];
-      if (effect.type === 'dot') {
-        // Los DoTs se stackean
-        existing.value += effect.value;
-      } else {
-        // Otros efectos se refrescan
-        existing.value = Math.max(existing.value, effect.value);
-      }
-      existing.duration = effect.duration;
-    } else {
-      // Agregar nuevo efecto
-      this.statusEffects.push({ ...effect });
-    }
-  }
-
-  // Actualizar efect
+}

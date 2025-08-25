@@ -306,7 +306,7 @@ function getEnemyEmoji(enemyId: string): string {
 }
 
 // Colores por raza para fallbacks
-funnction getEnemyColor(race: RaceKey): string {
+function getEnemyColor(race: RaceKey): string {
   const colorMap = {
     human: '#4a9eff',
     sliver: '#b455ff',
@@ -315,6 +315,7 @@ funnction getEnemyColor(race: RaceKey): string {
 
   return colorMap[race];
 }
+
 
 
 

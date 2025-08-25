@@ -1,4 +1,4 @@
-if (selectedTowerType) {
+fif (selectedTowerType) {
       // Verificar si podemos construir aquí
       if (canBuildAt(gridPos) && resources >= selectedTowerType.cost) {
         // Construir torre
@@ -20,7 +20,7 @@ if (selectedTowerType) {
        console.log(`Built ${selectedTowerType.name} at (${gridPos.row}, ${gridPos.col})`);
       }
     }
-  }, [gameState, selectedTowerType, resources, addEntity]);
+   [gameState, selectedTowerType, resources, addEntity]);
 
   return (
     <div className={`w-full h-full bg-gradient-to-br ${race.colors.background} relative`}>
@@ -1432,4 +1432,5 @@ export default function BattleEngine({ config }: { config: BattleConfig }) {
   );
 
 }
+
 

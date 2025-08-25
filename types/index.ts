@@ -26,6 +26,40 @@ export type StatusEffect = {
   source: string;
 };
 
+export type EnemyType = {
+  id: string;
+  name: string;
+  race: RaceKey;
+  health: number;
+  maxHealth: number;
+  speed: number;
+  armor: number;
+  reward: number;
+  resistances: Partial<Record<AttackType, number>>;
+  spriteKey: string;
+  size: 'small' | 'medium' | 'large';
+  deathSound?: string;
+  hitSound?: string;
+};
+
+export type Enemy = {
+  id: string;
+  type: EnemyType;
+  position: IsometricPosition;
+  health: number;
+  pathProgress: number;
+  pathIndex: number;
+  statusEffects: StatusEffect[];
+  isAlive: boolean;
+};
+
+export type SpecialAbility = {
+  type: 'splash' | 'chain' | 'dot' | 'slow' | 'armor_pierce' | 'shield_drain';
+  value: number;
+  duration?: number;
+  radius?: number;
+};
+
 export type RaceConfig = {
   key: RaceKey;
   name: string;

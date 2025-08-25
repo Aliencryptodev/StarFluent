@@ -1,5 +1,31 @@
 export type RaceKey = 'human' | 'sliver' | 'alien';
 
+export type GridPosition = {
+  row: number;
+  col: number;
+};
+
+export type IsometricPosition = {
+  x: number;
+  y: number;
+  z: number;
+};
+
+export type AttackType = 
+  | 'projectile'
+  | 'hitscan'
+  | 'splash'
+  | 'chain'
+  | 'dot'
+  | 'slow';
+
+export type StatusEffect = {
+  type: 'dot' | 'slow' | 'stun' | 'armor_reduction';
+  value: number;
+  duration: number;
+  source: string;
+};
+
 export type RaceConfig = {
   key: RaceKey;
   name: string;

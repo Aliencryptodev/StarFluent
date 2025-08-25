@@ -886,7 +886,7 @@ export default function BattleEngine({ config }: { config: BattleConfig }) {
         console.log(`Built ${selectedTowerType.name} at (${gridPos.row}, ${gridPos.col})`);
       }
     }
-  }, [gameState, selectedTowerType, resources, addEntity]);
+   [gameState, selectedTowerType, resources, addEntity]);
 
   // Manejar click en entidad
   const handleEntityClick = useCallback((entity: GameEntity) => {
@@ -1432,3 +1432,4 @@ export default function BattleEngine({ config }: { config: BattleConfig }) {
   );
 
 }
+

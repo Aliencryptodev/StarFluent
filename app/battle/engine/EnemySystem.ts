@@ -51,6 +51,26 @@ export class EnemyInstance {
   }
 }
 
+ takeDamage(damage: number, attackType: AttackType, sourceId: string): boolean {
+    if (!this.isAlive) return false;
+
+    const resistance = this.type.resistances[attackType] || 0;
+    const damageMultiplier = Math.max(0, 1 - resistance);
+    const armorReduction = Math.max(0, damage - this.type.armor);
+    const realDamage = Math.floor(armorReduction * damageMultiplier);
+    
+    this.health = Math.max(0, this.health - realDamage);
+    this.lastDamageTime = Date.now();
+    
+    if (this.health <= 0) {
+      this.isAlive = false;
+      return true;
+    }
+    
+    return false;
+  }
+  
+
     // Actualizar efectos de estado
   private updateStatusEffects(deltaTime: number): void {
     this.statusEffects = this.statusEffects.filter(effect => {
@@ -451,3 +471,4 @@ export class EnemyManager {
 
 
   // Actualizar efect
+

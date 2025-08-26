@@ -34,7 +34,22 @@ export class EnemyInstance {
 
   // Actualizar el enemigo
   update(deltaTime: number): void {
-    if (!this.isAlive) return;
+  if (!this.isAlive) return;
+
+  // Actualizar efectos de estado
+  this.updateStatusEffects(deltaTime);
+  
+  // Actualizar velocidad basada en efectos
+  this.updateSpeed();
+  
+  // Actualizar movimiento
+  this.pathFollower.update(deltaTime);
+  
+  // Verificar si llegó al final
+  if (this.pathFollower.hasReachedEnd()) {
+    this.isAlive = false;
+  }
+}
 
     // Actualizar efectos de estado
   private updateStatusEffects(deltaTime: number): void {
@@ -433,5 +448,6 @@ export class EnemyManager {
       this.statusEffects.push({ ...effect });
     }
   }
+
 
   // Actualizar efect
